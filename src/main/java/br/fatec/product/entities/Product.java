@@ -10,11 +10,11 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private double price;
     private String category;
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public void setId(long id) {
