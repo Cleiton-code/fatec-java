@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.fatec.product.entities.Product;
+import br.fatec.product.dtos.ProductRequest;
+import br.fatec.product.dtos.ProductResponse;
+
 import br.fatec.product.service.ProductService;
 
 @RestController
@@ -24,12 +26,12 @@ public class ProductController {
     private ProductService service;
     
     @GetMapping
-    public ResponseEntity<List<Product>> geProducts(){
+    public ResponseEntity<List<ProductResponse>> geProducts(){
             return ResponseEntity.ok(service.getAlProductsl());
         
     }
     @GetMapping("{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable long id){
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable long id){
             return ResponseEntity.ok(service.getProductByIProduct(id));
 
     }
@@ -41,15 +43,15 @@ public class ProductController {
         
     }
 
-    @PutMapping()
-    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody Product product){
+    @PutMapping("{id}")
+    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody ProductRequest product){
         service.update(product, id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping()
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product){
-        Product newProduct = service.save(product);
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody ProductRequest product){
+        ProductResponse newProduct = service.save(product);
         return ResponseEntity.created(null).body(newProduct);
     }
 }
